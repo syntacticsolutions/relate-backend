@@ -24,12 +24,6 @@ exports.uploadTo = (image, folder, fileName, mimeType) => {
     })
 }
 
-// exports.listBlogImages = (req, res) => {
-//     return gStorage.listImages(process.env.STORAGE_BUCKET_URI, 'blog')
-//     .then(list => res.status(200).send(list))
-//     .catch(err => res.status(500).send(err))
-// }
-
 // exports.uploadToUserSpace = (req, res) => {
 //     let [fileName, mimeType, image] = getDetails(req.body.image)
 //     return uploadTo(image, 'blog', fileName, mimeType)

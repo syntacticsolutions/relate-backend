@@ -32,7 +32,7 @@ INSERT INTO reviews (review_type_id, author_id, reviewed_id, rating_1, rating_2,
 VALUES
 (1, 2, 1, 5, 4, 3, 'Miguel is an awesome dude. Really handsome.'),
 (2, 2, 1, 5, 5, 4, 'Miguel is very punctual and likes to tackle the tough problems'),
-(3, 2, 1, 3, 5, 5, 'Miguel is a good friend and has a really dry sense of  humor.');
+(3, 2, 1, 3, 5, 5, 'Miguel is a good friend and has a really dry sense of humor.');
 
 INSERT INTO votes (author_id, review_id, liked)
 VALUES
