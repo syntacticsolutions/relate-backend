@@ -31,3 +31,19 @@ exports.mapByReviewIds = (ids) => {
         )
         .catch(err => {throw new Error(err)})
 }
+
+exports.vote = (req, res) => {
+    const {review_id, liked, user_id} = req.body
+    const {user_id: author_id} = req.user
+    const vote = {
+        user_id,
+        author_id,
+        review_id,
+        liked
+    }
+
+    return knex('votes')
+        .insert(vote)
+        .then((data) => res.status(200).send(data))
+        .catch(err => res.status(500).send(err))
+}

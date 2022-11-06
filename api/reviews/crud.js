@@ -70,15 +70,15 @@ exports.getReviewerRatingsByIds = (ids, excludeReviews) => {
         .catch(err => {throw new Error(err)})
 }
 
-// need to fix the user table in db next
+// need to fix the user and votes table in db next
 exports.getUser = (id) => {
     return knex('users')
         .select(
             'first_name',
             'last_name',
-            // 'profession',
-            // 'location',
-            // 'personal_quote'
+            'profession',
+            'location',
+            'personalQuote'
         )
         .where('id', id)
         .then(data => data[0])
