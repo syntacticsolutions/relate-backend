@@ -99,7 +99,10 @@ let createUser = (uid, email) => {
     return knex('users').insert({
         uid,
         email,
-        role_id: 3
+        role_id: 3,
+        personalQuote: '',
+        profession: '',
+        location: '',
     })
     .then(res => {
         return res
@@ -108,7 +111,8 @@ let createUser = (uid, email) => {
 }
 
 exports.login = (req, res) => {
-    let {uid, email} = req.body
+    if (!res.locals.user) return res.status(200).send({})
+    let {uid, email} = res.locals.user
     return knex('users')
         .where({uid})
         .then(async data => {

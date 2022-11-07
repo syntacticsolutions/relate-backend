@@ -8,27 +8,15 @@ firebaseAdmin.initializeApp({
 });
 // Import the package
 
-const processAuth = (req, res) => {
-        return new Promise((resolve, reject) => {
-            
-            /**
-                @desc - check if authorization header is present
-            */
-            const authorizationHeader = req.headers['authorization'];
-            if (!authorizationHeader) reject({ Error: 'Forbidden' })
-            const idToken = authorizationHeader.split(' ').pop();
-            
-            /**
-                @desc - verify the token
-            */
-            return firebaseAdmin
-            .auth()
-            .verifyIdToken(idToken)
-            .then(user => {
-                resolve(user)
-            })
-            .catch(err => reject(err))
-        })
+const processAuth = (req) => {
+    const authorizationHeader = req.headers['authorization'] || '';
+    if (!authorizationHeader) return null
+    const idToken = authorizationHeader.split(' ').pop();
+    
+    return firebaseAdmin
+        .auth()
+        .verifyIdToken(idToken)
+        .catch(console.log)
 }
 
 const isAdmin = (req, res, next) => {
@@ -66,23 +54,19 @@ const isAuthenticated = (req, res, next) => {
     return processAuth(req, res)
     .then(user => {
 
-            if (!user.email_verified) {
-                return Promise.reject({ error: 'Email Unverified!' })
-            }
+            // if (!user.email_verified) {
+            //     return Promise.reject({ error: 'Email Unverified!' })
+            // }
 
             res.locals.user = user; // Set the user object to locals
-            next();
+            return next();
     })
     .catch(err => res.status(403).send('forbidden'))
 }
 
-const setUser = (req, res, next) => {
-    return processAuth(req, res)
-    .then(user => {
-            res.locals.user = user;
-            next();
-    })
-    .catch(() => next())
+const setUser = async (req, res, next) => {
+    res.locals.user = await processAuth(req, res)
+    next()
 }
 
 const getPerms = (req, res) => {
