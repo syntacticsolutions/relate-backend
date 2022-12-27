@@ -28,6 +28,19 @@ exports.list = (req, res) => {
         });
 };
 
+exports.search = (req, res) => {
+    let {query} = req.params
+    return knex('users')
+        .select('*')
+        .where('first_name', 'like', `%${query}%`)
+        .orWhere('last_name', 'like', `%${query}%`)
+        .then(data => {
+            if (!data[0]) return res.status(404).send('Forbidden')
+            else return res.status(200).send(data)
+        })
+        .catch(err => {throw new Error(err)})
+}
+
 exports.getUser = (req, res) => {
     let {uid} = req.params
     return knex('users')

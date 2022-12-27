@@ -9,12 +9,12 @@ router.get('/signup', users.signUp)
 
 router.get('/', users.list);
 
+router.get('/search/:query', users.search);
+
 router.get('/:uid', users.getUser);
 
 router.get('/perms/:uid', users.getPerms);
 
-router.post('/toggle_perms/:uid', users.togglePermission)
-
-
+router.post('/toggle_perms/:uid', users.togglePermission);
 
 module.exports = router
